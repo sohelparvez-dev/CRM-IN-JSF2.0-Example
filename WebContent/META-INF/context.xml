@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Context>
+
+<!-- ===========================================================================
+  context.xml - JSF 2.3 Konfigurationsdatei
+  Verzeichnis: {Projekt}/WebContent/META_INF (Achtung: nicht WEB-INF!!!)
+  Version: 1.0.1, 2017-07-01, wkl
+============================================================================ -->
+
+<Context>
+
+   <Resource name="BeanManager" 
+             auth="Container"
+             type="javax.enterprise.inject.spi.BeanManager"
+             factory="org.jboss.weld.resources.ManagerObjectFactory" />
+             
+</Context>

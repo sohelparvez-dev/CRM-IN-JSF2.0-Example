@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui = "http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="table-style.css" />
+	<style type="text/css">
+.ui-datatable {
+	margin-bottom: 25px
+}
+
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+
+.ui-button-text-only .ui-button-text {
+	padding: 0.3em 0.4em;
+}
+
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+	visibility: hidden;
+}
+
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+
+		input[type=text], select, textarea {
+		  width: 100%;
+		  padding: 12px;
+		  border: 1px solid #ccc;
+		  border-radius: 4px;
+		  resize: vertical;
+		}
+		
+		label {
+		  padding: 12px 12px 12px 0;
+		  display: inline-block;
+		}
+		
+		input[type=submit] {
+		  background-color: #4CAF50;
+		  color: white;
+		  padding: 12px 20px;
+		  border: none;
+		  border-radius: 4px;
+		  cursor: pointer;
+		  float: right;
+		}
+		
+		input[type=submit]:hover {
+		  background-color: #45a049;
+		}
+		
+		.container {
+		  border-radius: 5px;
+		  background-color: #f2f2f2;
+		  padding: 20px;
+		}
+		
+		.col-25 {
+		  float: left;
+		  width: 25%;
+		  margin-top: 6px;
+		}
+		
+		.col-75 {
+		  float: left;
+		  width: 75%;
+		  margin-top: 6px;
+		}
+		
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		
+		/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+		@media screen and (max-width: 600px) {
+		  .col-25, .col-75, input[type=submit] {
+		    width: 100%;
+		    margin-top: 0;
+		  }
+		}
+		#btn-default {
+			background-color: blue;
+    		color: white;
+		}
+	</style>
+</h:head>
+
+<h:body>
+	<h:form id="form" enctype="multipart/form-data">
+    	<h:commandButton action="#{login.logout}"
+					value="Logout"></h:commandButton>
+		<h1>Customer Information</h1>
+		<hr/>
+		<h:inputHidden id="customerid" value="#{newCustomer.customerId}"></h:inputHidden>
+		<p:panelGrid  columns="2" columnClasses="label,value">
+			<h:outputText value="First Name:" />
+			<h:outputText id="firstname" value="#{newCustomer.firstName}" />
+			
+			<h:outputText value="Last Name:" />
+			<h:outputText id="lastname" value="#{newCustomer.lastName}" />
+			
+			<h:outputText value="Email Id:" />
+			<h:outputText id="email" value="#{newCustomer.email}" />
+			
+			<h:outputText value="Work Phone:" />
+			<h:outputText id="workphone" value="#{newCustomer.workPhone}" />
+			
+			<h:outputText value="Mobile Phone:" />
+			<h:outputText id="mobilephone" value="#{newCustomer.mobilePhone}" />
+			
+			<h:outputText value="Company:" />
+			<h:outputText id="company" value="#{newCustomer.company}" />
+			
+			<h:outputText value="Job Title:" />
+			<h:outputText id="jobtitle" value="#{newCustomer.jobTitle}" />
+			
+			<h:outputText value="Address:" />
+			<h:outputText id="address" value="#{newCustomer.address}" />
+			
+			<h:outputText value="City:" />
+			<h:outputText id="city" value="#{newCustomer.city}" />
+			
+			<h:outputText value="State:" />
+			<h:outputText id="state" value="#{newCustomer.state}" />
+			
+			<h:outputText value="Zip:" />
+			<h:outputText id="zip" value="#{newCustomer.zipCode}" />	
+			
+			
+			<h:outputText value="Contracts File:" />
+	        <h:graphicImage height="50px" width="50px" id="contractsimg" value="#{newCustomer.imageContent}">
+			</h:graphicImage>		
+		</p:panelGrid>
+		<br/>
+		<span>
+		<br/></span>	
+		<br/>
+		<p:dataTable var="c" value="#{filterView.customerList}" widgetVar="customerTable2"
+                 emptyMessage="No coustomer found" filteredValue="#{filterView.filterCustomerList}"
+                 globalFilterFunction="#{filterView.globalFilterFunction}"
+                 paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                 rows="5">
+         
+ 
+        <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="Search all fields" />
+                <p:inputText id="globalFilter" onkeyup="PF('customerTable2').filter()" style="width:150px" placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+        <!-- <p:ajax event="rowSelect" update="myInput" /> -->
+        <p:column headerText="Customer Id" filterBy="#{c.customerId}">
+            <h:outputText value="#{c.customerId}" />
+        </p:column>
+ 
+        <p:column headerText="First Name" filterBy="#{c.firstName}">
+            <h:outputText value="#{c.firstName}" />
+        </p:column>
+ 
+        <p:column headerText="Last Name" filterBy="#{c.lastName}">
+            <h:outputText value="#{c.lastName}" />
+        </p:column>
+ 
+        <p:column headerText="Email" filterBy="#{c.email}">
+            <h:outputText value="#{c.email}" />
+        </p:column>
+ 
+        <p:column headerText="Work Phone" filterBy="#{c.workPhone}">
+            <h:outputText value="#{c.workPhone}" />
+        </p:column>
+        <p:column headerText="Mobile Phone" filterBy="#{c.mobilePhone}">
+            <h:outputText value="#{c.mobilePhone}" />
+        </p:column>
+        <p:column headerText="Company" filterBy="#{c.company}">
+            <h:outputText value="#{c.company}" />
+        </p:column>
+        <p:column headerText="Job Title" filterBy="#{c.jobTitle}">
+            <h:outputText value="#{c.jobTitle}" />
+        </p:column>
+        <p:column headerText="Contracts">
+        	<h:outputLink value="DisplayImage?Image_id=#{c.customerId}" target="_blank" >View Contracts </h:outputLink>
+        	<!-- <img src="data:image/png;base64, "#{c.contracts}"> -->
+        	<!-- <p:graphicImage value="#{c.contracts}" width="200" height="100"></p:graphicImage> -->
+        </p:column>
+        <p:column headerText="Action">
+            <p:commandButton id="selectRowBtn" value="Details" 
+			    action="#{newCustomer.loadCustomer}">
+			    <f:ajax execute="form" reRender="contractsimg customerid firstname lastname email workphone mobilephone company jobtitle address city state zip"/>
+			    <f:param name="customerId" value="#{c.customerId}" />
+			</p:commandButton>		
+        </p:column>
+    </p:dataTable>
+    <p:dialog header="Customer Info" widgetVar="customerDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="customerDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty filterView.selectedCustomer}" columnClasses="label,value">
+                
+                <h:outputText value="Address" />
+                <h:outputText value="#{filterView.selectedCustomer.address}" />
+             
+                <h:outputText value="City" />
+                <h:outputText value="#{filterView.selectedCustomer.city}" />
+             
+                <h:outputText value="State" />
+                <h:outputText value="#{filterView.selectedCustomer.state}" />
+             
+                <h:outputText value="Zip" />
+                <h:outputText value="#{filterView.selectedCustomer.zipCode}" />
+                
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+		
+	</h:form>
+</h:body>
+
+</html>
